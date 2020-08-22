@@ -79,7 +79,7 @@ public abstract class Empleado implements Planilla {
 
     @Override
     public float calculaBono14(float salario, Date fecha_ingreso) {
-        //                                      01 01 2020
+        
         //OBTENIENDO LA FECHA ACTUAL
         Calendar fecha = new GregorianCalendar();
   
@@ -89,10 +89,44 @@ public abstract class Empleado implements Planilla {
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         
         Date fecha_actual = new Date(anio,mes,dia);
-        float dias;
-        dias = ((fecha_actual.getTime()-fecha_ingreso.getTime())/(1000*60*60*24));
-        System.out.println("Dias: " + dias);
-        return dias;
+        int dias_Empleado =(int) ((fecha_actual.getTime()-fecha_ingreso.getTime())/(1000*60*60*24));//##
+        
+        //Calculando pago de bono 14 proporcinal a lo que va del año
+        Date fecha_bono;
+        long miliBono = 1593583200;
+        if(mes < 7){
+            fecha_bono = new Date(miliBono);
+            System.out.println("año a evaluar:" + fecha_bono);
+        } else {
+            fecha_bono = new Date(anio-19,7,1);
+            System.out.println("año a evaluar:" + fecha_bono);
+        }
+        int dias_bono;
+        
+        if (fecha_ingreso.before(fecha_bono)){
+            System.out.println("Si fecha de ingreso esta despues del bono");
+            dias_bono =(int) ((fecha_actual.getTime()-fecha_ingreso.getTime())/(1000*60*60*24));//##
+            System.out.println("Dias del Bono para hoy: " + dias_bono);
+        } else {
+            System.out.println("Si fecha de ingreso esta antes del bono");
+            dias_bono =(int) ((fecha_actual.getTime()-fecha_bono.getTime())/(1000*60*60*24));//##
+            System.out.println("Dias del Bono para hoy: " + dias_bono);
+        }
+        
+        float bono = (salario/365)*dias_bono;
+        
+        System.out.println("Bono a recibir: " + bono);
+        /*        
+        while(dias_Empleado>=dias_Bono){
+            dias_Empleado -= dias_Bono;
+            System.out.println("Dias en el while: " + dias_Empleado);
+        }
+        System.out.println("***************************");
+        System.out.println("Dias liego de while: " + dias_Empleado);
+        
+        //System.out.println("Dias: " + dias);*/
+        
+        return bono;
     }
 
     @Override

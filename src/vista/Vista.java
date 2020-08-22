@@ -109,12 +109,10 @@ public class Vista extends javax.swing.JFrame {
         // Obteniendo fecha de ingreso
         SimpleDateFormat miFormato = new SimpleDateFormat("dd MM yyyy");
         String fech = txtFecha.getText().substring(0, 10);
-        System.out.println("Fecha en cadena: " + fech);
         
         try{
             Date fechaInicial = miFormato.parse(fech);
             Calculos empleado = new Calculos();
-            System.out.println("Fecha parseada: " + fechaInicial);
             empleado.calculaBono14(Integer.parseInt(txtSalario.getText()) ,fechaInicial);
            
         }catch(ParseException e){
