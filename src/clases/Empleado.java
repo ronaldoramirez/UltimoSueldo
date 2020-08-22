@@ -91,7 +91,7 @@ public abstract class Empleado implements Planilla {
         Date fecha_actual = new Date(anio,mes,dia);
         float dias;
         dias = ((fecha_actual.getTime()-fecha_ingreso.getTime())/(1000*60*60*24));
-        System.out.println("************Dias: " + dias);
+        System.out.println("Dias: " + dias);
         return dias;
     }
 
