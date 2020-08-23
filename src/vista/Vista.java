@@ -12,8 +12,6 @@ public class Vista extends javax.swing.JFrame {
      */
     public Vista() {
         initComponents();
-        selectRegimen.add(P);
-        selectRegimen.add(f);
     }
 
     @SuppressWarnings("unchecked")
