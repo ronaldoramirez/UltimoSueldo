@@ -3,6 +3,7 @@ package vista;
 import clases.Calculos;
 import java.text.*;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,9 +33,9 @@ public class Vista extends javax.swing.JFrame {
         txtFecha = new javax.swing.JTextField();
         lblBonificacion = new javax.swing.JLabel();
         txtBonificacion = new javax.swing.JTextField();
-        txtRegimen = new javax.swing.JTextField();
         lblRegimen = new javax.swing.JLabel();
         btnCalcular = new javax.swing.JButton();
+        charRegimen = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +54,8 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        charRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione", "F", "P" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,12 +69,16 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(lblFecha)
                             .addComponent(lblBonificacion)
                             .addComponent(lblRegimen))
-                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBonificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBonificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(btnCalcular)))
@@ -94,11 +101,11 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(lblBonificacion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRegimen))
+                    .addComponent(lblRegimen)
+                    .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnCalcular)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,19 +115,27 @@ public class Vista extends javax.swing.JFrame {
         // Obteniendo fecha de ingreso
         SimpleDateFormat miFormato = new SimpleDateFormat("dd MM yyyy");
         String fech = txtFecha.getText().substring(0, 10);
-        
-        try{
+
+        try {
             Date fechaInicial = miFormato.parse(fech);
             Calculos empleado = new Calculos();
-            float bono =empleado.calculaBono14(Integer.parseInt(txtSalario.getText()) ,fechaInicial);
-            float aguinaldo =empleado.calculaAguinaldo(Integer.parseInt(txtSalario.getText()), fechaInicial);
+            empleado.calculaBono14(Integer.parseInt(txtSalario.getText()), fechaInicial);
+            empleado.calculaAguinaldo(Integer.parseInt(txtSalario.getText()), fechaInicial);
             empleado.calculaIndemnizacion(Integer.parseInt(txtSalario.getText()), fechaInicial);
-             System.out.println("Bono = " + bono);
-             System.out.println("Aguinaldo = " + aguinaldo);
-        }catch(ParseException e){
+            
+            if ((char)charRegimen.getSelectedItem() != 's') {
+                empleado.setRegimen((char)charRegimen.getSelectedItem());
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un regimen");
+                empleado.setRegimen('P');
+            }
+            
+            
+            empleado.calculaSalario();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     /**
@@ -160,13 +175,13 @@ public class Vista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
+    private javax.swing.JComboBox<String> charRegimen;
     private javax.swing.JLabel lblBonificacion;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblRegimen;
     private javax.swing.JLabel lblSalario;
     private javax.swing.JTextField txtBonificacion;
     private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtRegimen;
     private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,12 +33,19 @@
                           <Component id="lblBonificacion" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblRegimen" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtFecha" min="-2" pref="190" max="-2" attributes="0"/>
-                          <Component id="txtSalario" min="-2" pref="190" max="-2" attributes="0"/>
-                          <Component id="txtBonificacion" min="-2" pref="190" max="-2" attributes="0"/>
-                          <Component id="txtRegimen" min="-2" pref="190" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtFecha" min="-2" pref="190" max="-2" attributes="0"/>
+                                  <Component id="txtSalario" min="-2" pref="190" max="-2" attributes="0"/>
+                                  <Component id="txtBonificacion" min="-2" pref="190" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component id="charRegimen" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -70,12 +77,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtRegimen" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblRegimen" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="charRegimen" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCalcular" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="135" max="32767" attributes="0"/>
+              <EmptySpace pref="130" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,8 +109,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtBonificacion">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtRegimen">
-    </Component>
     <Component class="javax.swing.JLabel" name="lblRegimen">
       <Properties>
         <Property name="text" type="java.lang.String" value="Regimen:"/>
@@ -116,6 +121,20 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalcularActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="charRegimen">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="seleccione"/>
+            <StringItem index="1" value="F"/>
+            <StringItem index="2" value="P"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
