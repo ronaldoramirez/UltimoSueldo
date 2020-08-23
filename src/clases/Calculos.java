@@ -19,7 +19,24 @@ public class Calculos extends Empleado {
     
     @Override
     protected float calculaIVA(char regimen) {
-        return 0.0f;
+        float iva = 0.0f;
+        if (regimen == 'p'){
+            System.out.println("No es necesario calcular el iva por que tiene prestaciones");
+        }else if(regimen == 'f'){
+            iva = super.getSalario() * 0.12f;
+        }
+        return iva;
     }
     
+    protected float calculaSalario(){
+        if(super.getRegimen() == 'p'){
+            return super.getSalario()-super.calculaIGSS(super.getSalario() + super.getBonificacion());
+        }
+        else{
+            char regimen = super.getRegimen();
+             return super.getSalario() - this.calculaIVA(regimen);
+        }
+        
+    }
+       
 }

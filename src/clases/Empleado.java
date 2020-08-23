@@ -1,12 +1,8 @@
 package clases;
 
 import interfaz.Planilla;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.*;
-import java.util.concurrent.*;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -69,7 +65,7 @@ public abstract class Empleado implements Planilla {
         this.regimen = regimen;
     }
     
-    protected abstract float calculaIVA(char regimen);
+    abstract protected float calculaIVA(char regimen);
 
     @Override
     public float calculaIGSS(float salario) {
@@ -117,6 +113,8 @@ public abstract class Empleado implements Planilla {
         
         float bono = (salario/365)*dias_bono;
         
+        System.out.println("Dias: " + dias_bono);
+        
         return bono;
     }
 
@@ -159,7 +157,7 @@ public abstract class Empleado implements Planilla {
         }
         
         float aguinaldo = (salario/365)*dias_aguinaldo;
-        
+        System.out.println("Dias: " + dias_aguinaldo);
         return aguinaldo;
     }
 
@@ -175,15 +173,10 @@ public abstract class Empleado implements Planilla {
         
         Date fecha_actual = new Date(anio,mes,dia);
         int dias_trabajados =(int) ((fecha_actual.getTime()-fecha_ingreso.getTime())/(1000*60*60*24));//##
-                
-        while(dias_trabajados>=365){
-            dias_trabajados -= 365;
-            System.out.println("Dias en el while: " + dias_trabajados);
-        }
-        System.out.println("***************************");
-        System.out.println("Dias liego de while: " + dias_trabajados);
+        float indemnizacion = (((salario * 14)/12)*dias_trabajados)/365;
         
-        
+        //sueldo * 14 /12 = promedio
+        //(promedio * dias trabajado) / 365
         return 0.0f;
     }
     

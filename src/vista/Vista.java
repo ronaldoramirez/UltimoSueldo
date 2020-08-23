@@ -1,7 +1,6 @@
 package vista;
 
 import clases.Calculos;
-import clases.Empleado;
 import java.text.*;
 import java.util.Date;
 
@@ -113,8 +112,11 @@ public class Vista extends javax.swing.JFrame {
         try{
             Date fechaInicial = miFormato.parse(fech);
             Calculos empleado = new Calculos();
-            empleado.calculaBono14(Integer.parseInt(txtSalario.getText()) ,fechaInicial);
-           
+            float bono =empleado.calculaBono14(Integer.parseInt(txtSalario.getText()) ,fechaInicial);
+            float aguinaldo =empleado.calculaAguinaldo(Integer.parseInt(txtSalario.getText()), fechaInicial);
+            empleado.calculaIndemnizacion(Integer.parseInt(txtSalario.getText()), fechaInicial);
+             System.out.println("Bono = " + bono);
+             System.out.println("Aguinaldo = " + aguinaldo);
         }catch(ParseException e){
             e.printStackTrace();
         }
