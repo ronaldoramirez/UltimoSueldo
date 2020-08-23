@@ -18,7 +18,6 @@ public class Vista extends javax.swing.JFrame {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,87 +117,43 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        // Obteniendo fecha de ingreso
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd MM yyyy");
-        String fech = txtFecha.getText().substring(0, 10);
-        String item = "", regimen, texto_resultante;
-        char reg;
-        float bono14, aguinaldo, indemenizacion, igss, iva, subTotal, salarioLiquido;
-        DecimalFormat formato1 = new DecimalFormat("#,###,###.00");
-        
-        try {
-            Date fechaInicial = miFormato.parse(fech);
-            Calculos empleado = new Calculos();
-            item = charRegimen.getSelectedItem().toString().substring(0, 1);
-            
-            if (item.equalsIgnoreCase("s")) {
-                JOptionPane.showMessageDialog(null, "Seleccione un regimen, por defecto se seleccionara la <prestaciones>");
-                empleado.setRegimen('P');
-                charRegimen.setSelectedItem("P");
-            } else {
-                
-                empleado.setRegimen(item.charAt(0));    
-            }
-            empleado.setSalario(Float.parseFloat(txtSalario.getText()));
-            empleado.setBonificacion(Float.parseFloat(txtBonificacion.getText()));
-            empleado.setFecha_ingreso(fechaInicial);
-            bono14 = empleado.calculaBono14(Float.parseFloat(txtSalario.getText()), fechaInicial);
-            aguinaldo = empleado.calculaAguinaldo(Float.parseFloat(txtSalario.getText()), fechaInicial);
-            indemenizacion = empleado.calculaIndemnizacion(Float.parseFloat(txtSalario.getText()), fechaInicial);
-            igss = empleado.calculaIGSS(Float.parseFloat(txtSalario.getText()));
-            iva = empleado.getIVA();
-            subTotal = empleado.calculaSubTotal();
-            salarioLiquido = empleado.calculaSalario();
-            
-            reg = empleado.getRegimen();
-            
-            switch (reg) {
-                case 'P':{
-                    regimen = "Con Prestaciones";
-                    texto_resultante = "         ULTIMO \t SUELDO \n" 
-                                    + "************************************\n"
-                                    + "\n"
-                                    + "\n"
-                                    + "  Regimen:       \t\t" + regimen + "\n"
-                                    + "   Sueldo:       \t\tQ." + formato1.format(empleado.getSalario()) + "\n"
-                                    + "   Bonificación: \t\tQ." + formato1.format(empleado.getBonificacion()) + "\n"
-                                    + "   Bono 14:      \t\tQ."+ formato1.format(bono14) + "\n"
-                                    + "   Aguinaldo:    \t\tQ."+ formato1.format(aguinaldo) + "\n"
-                                    + "(+)Indemnización:\tQ."+ formato1.format(indemenizacion) + "\n"
-                                    + "--------------------------------------------------------\n"
-                                    + "   Sub Total:    \t\tQ." + formato1.format(subTotal) + "\n"
-                                    + "(-)IGSS:         \t\tQ." + formato1.format(igss) + "\n"
-                                    + "---------------------------------------------------------\n"
-                                    + "Sueldo Liquido:  \tQ."+ formato1.format(salarioLiquido) + "\n";
-                                    
-                }
-                    break;
-                case 'F':{
-                    regimen = "Facturando";
-                    texto_resultante = "         ULTIMO \t SUELDO \n" 
-                                    + "************************************\n"
-                                    + "\n"
-                                    + "\n"
-                                    + "Regimen:         \t" + regimen + "\n"
-                                    + "    Sueldo:      \tQ." + formato1.format(empleado.getSalario()) + "\n"
-                                    + "-------------------------------------------\n"
-                                    + "    Sub Total:   \tQ." + formato1.format(subTotal) + "\n"
-                                    + "(-) IVA:         \tQ." + formato1.format(iva) + "\n"
-                                    + "-------------------------------------------\n"
-                                    + "Sueldo Liquido:  Q."+ formato1.format(salarioLiquido) + "\n";
-                }
-                    break;
-                default:{
-                    texto_resultante = " Ingrese bien los datos\n";
-                    regimen = "No seleccionado";
-                }
-                    break;
-            }
-            
-            txtResultado.setText(texto_resultante);
-            
-        } catch (ParseException e) {
-            e.printStackTrace();
+        /*
+        if (!(txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
+            System.out.println("Vamos a calcular: ");
+            this.calcular();
+        } else if((txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
+            JOptionPane.showMessageDialog(null, "Campo salario esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
+        } else if(!(txtSalario.getText().equalsIgnoreCase(""))&&(txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
+            JOptionPane.showMessageDialog(null, "Campo Fecha Ingreso esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
+        } else if(!(txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(txtBonificacion.getText().equalsIgnoreCase(""))){
+            JOptionPane.showMessageDialog(null, "Campo Bonificación esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Todos los campos estan vacíos","Error!!",JOptionPane.ERROR_MESSAGE);
+        }
+         */
+        String campos_vacios = "";
+        if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            this.calcular();
+        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Bonificación").toString();
+        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Fecha de Ingreso ").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha de Ingreso, Bonificación ").toString();
+        }else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Bonificación ").toString();
+        }else {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Todos los campos, ").toString();
+        }
+
+        if (!campos_vacios.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "El siguiente(s) campo(s) se encuentra vacío(s): " + campos_vacios +".", "Error!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //No ejecuta nada
         }
 
     }//GEN-LAST:event_btnCalcularActionPerformed
@@ -236,6 +191,90 @@ public class Vista extends javax.swing.JFrame {
                 new Vista().setVisible(true);
             }
         });
+    }
+
+    public void calcular() {
+        // Obteniendo fecha de ingreso
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd MM yyyy");
+        String fech = txtFecha.getText().substring(0, 10);
+        String item = "", regimen, texto_resultante;
+        char reg;
+        float bono14, aguinaldo, indemenizacion, igss, iva, subTotal, salarioLiquido;
+        DecimalFormat formato1 = new DecimalFormat("#,###,###.00");
+
+        try {
+
+            if (item.equalsIgnoreCase("s")) {
+                JOptionPane.showMessageDialog(null, "Seleccione un regimen");
+                //empleado.setRegimen('P');
+                //charRegimen.setSelectedItem("P");
+            } else {
+                Date fechaInicial = miFormato.parse(fech);
+                Calculos empleado = new Calculos();
+                item = charRegimen.getSelectedItem().toString().substring(0, 1);
+                empleado.setRegimen(item.charAt(0));
+                empleado.setSalario(Float.parseFloat(txtSalario.getText()));
+                empleado.setBonificacion(Float.parseFloat(txtBonificacion.getText()));
+                empleado.setFecha_ingreso(fechaInicial);
+                bono14 = empleado.calculaBono14(Float.parseFloat(txtSalario.getText()), fechaInicial);
+                aguinaldo = empleado.calculaAguinaldo(Float.parseFloat(txtSalario.getText()), fechaInicial);
+                indemenizacion = empleado.calculaIndemnizacion(Float.parseFloat(txtSalario.getText()), fechaInicial);
+                igss = empleado.calculaIGSS(Float.parseFloat(txtSalario.getText()));
+                iva = empleado.getIVA();
+                subTotal = empleado.calculaSubTotal();
+                salarioLiquido = empleado.calculaSalario();
+
+                reg = empleado.getRegimen();
+
+                switch (reg) {
+                    case 'P': {
+                        regimen = "Con Prestaciones";
+                        texto_resultante = "         ULTIMO \t SUELDO \n"
+                                + "************************************\n"
+                                + "\n"
+                                + "\n"
+                                + "  Regimen:       \t\t" + regimen + "\n"
+                                + "   Sueldo:       \t\tQ." + formato1.format(empleado.getSalario()) + "\n"
+                                + "   Bonificación: \t\tQ." + formato1.format(empleado.getBonificacion()) + "\n"
+                                + "   Bono 14:      \t\tQ." + formato1.format(bono14) + "\n"
+                                + "   Aguinaldo:    \t\tQ." + formato1.format(aguinaldo) + "\n"
+                                + "(+)Indemnización:\tQ." + formato1.format(indemenizacion) + "\n"
+                                + "--------------------------------------------------------\n"
+                                + "   Sub Total:    \t\tQ." + formato1.format(subTotal) + "\n"
+                                + "(-)IGSS:         \t\tQ." + formato1.format(igss) + "\n"
+                                + "---------------------------------------------------------\n"
+                                + "Sueldo Liquido:  \tQ." + formato1.format(salarioLiquido) + "\n";
+
+                    }
+                    break;
+                    case 'F': {
+                        regimen = "Facturando";
+                        texto_resultante = "         ULTIMO \t SUELDO \n"
+                                + "************************************\n"
+                                + "\n"
+                                + "\n"
+                                + "Regimen:         \t" + regimen + "\n"
+                                + "    Sueldo:      \tQ." + formato1.format(empleado.getSalario()) + "\n"
+                                + "-------------------------------------------\n"
+                                + "    Sub Total:   \tQ." + formato1.format(subTotal) + "\n"
+                                + "(-) IVA:         \tQ." + formato1.format(iva) + "\n"
+                                + "-------------------------------------------\n"
+                                + "Sueldo Liquido:  Q." + formato1.format(salarioLiquido) + "\n";
+                    }
+                    break;
+                    default: {
+                        texto_resultante = " Seleccione un regimen\n";
+                    }
+                    break;
+                }
+
+                txtResultado.setText(texto_resultante);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
