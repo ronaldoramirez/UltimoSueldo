@@ -110,8 +110,6 @@ public abstract class Empleado implements Planilla {
 
         float bono = (salario / 365) * dias_bono;
 
-        System.out.println("Dias: " + dias_bono);
-
         return bono;
     }
 
@@ -152,7 +150,6 @@ public abstract class Empleado implements Planilla {
         }
 
         float aguinaldo = (salario / 365) * dias_aguinaldo;
-        System.out.println("Dias: " + dias_aguinaldo);
         return aguinaldo;
     }
 
@@ -172,7 +169,7 @@ public abstract class Empleado implements Planilla {
 
         //sueldo * 14 /12 = promedio
         //(promedio * dias trabajado) / 365
-        return 0.0f;
+        return indemnizacion;
     }
 
     @Override
