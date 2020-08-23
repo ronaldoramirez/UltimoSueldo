@@ -2,10 +2,6 @@ package clases;
 
 import java.util.Date;
 
-/**
- *
- * @author William Sapón
- */
 public class Calculos extends Empleado {
 
     private int dia, mes, anio;

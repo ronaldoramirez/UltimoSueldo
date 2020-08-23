@@ -5,10 +5,6 @@ import java.text.*;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author William Sapón
- */
 public class Vista extends javax.swing.JFrame {
 
     /**
@@ -16,6 +12,8 @@ public class Vista extends javax.swing.JFrame {
      */
     public Vista() {
         initComponents();
+        selectRegimen.add(P);
+        selectRegimen.add(f);
     }
 
     @SuppressWarnings("unchecked")
@@ -108,8 +106,8 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCalcular)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -117,20 +115,7 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        /*
-        if (!(txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
-            System.out.println("Vamos a calcular: ");
-            this.calcular();
-        } else if((txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
-            JOptionPane.showMessageDialog(null, "Campo salario esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
-        } else if(!(txtSalario.getText().equalsIgnoreCase(""))&&(txtFecha.getText().equalsIgnoreCase(""))&&(!txtBonificacion.getText().equalsIgnoreCase(""))){
-            JOptionPane.showMessageDialog(null, "Campo Fecha Ingreso esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
-        } else if(!(txtSalario.getText().equalsIgnoreCase(""))&&(!txtFecha.getText().equalsIgnoreCase(""))&&(txtBonificacion.getText().equalsIgnoreCase(""))){
-            JOptionPane.showMessageDialog(null, "Campo Bonificación esta vacio","Error!!",JOptionPane.ERROR_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Todos los campos estan vacíos","Error!!",JOptionPane.ERROR_MESSAGE);
-        }
-         */
+        
         String campos_vacios = "";
         if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
             this.calcular();

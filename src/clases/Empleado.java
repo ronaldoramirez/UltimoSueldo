@@ -2,12 +2,7 @@ package clases;
 
 import interfaz.Planilla;
 import java.util.*;
-import java.text.SimpleDateFormat;
 
-/**
- *
- * @author William Sapón
- */
 public abstract class Empleado implements Planilla {
 
     //ATRIBUTOS
