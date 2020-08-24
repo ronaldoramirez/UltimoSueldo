@@ -7,10 +7,6 @@ package interfaz;
 
 import java.util.Date;
 
-/**
- *
- * @author William Sapón
- */
 public interface Planilla {
     public float calculaIGSS(float salario);
     public float calculaBono14(float salario, Date fecha_ingreso);

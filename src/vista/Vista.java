@@ -12,6 +12,7 @@ public class Vista extends javax.swing.JFrame {
      */
     public Vista() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +49,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         charRegimen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione", "F", "P" }));
+        charRegimen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                charRegimenActionPerformed(evt);
+            }
+        });
 
         txtResultado.setColumns(20);
         txtResultado.setRows(5);
@@ -58,10 +64,10 @@ public class Vista extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSalario)
                             .addComponent(lblFecha)
@@ -75,13 +81,15 @@ public class Vista extends javax.swing.JFrame {
                                         .addComponent(txtBonificacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                                         .addComponent(txtSalario))
                                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCalcular)
-                                    .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 87, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCalcular)
+                                .addGap(32, 32, 32))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(7, 7, 7))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,11 +109,10 @@ public class Vista extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegimen)
-                    .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCalcular)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(charRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCalcular))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,32 +121,21 @@ public class Vista extends javax.swing.JFrame {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         
-        String campos_vacios = "";
-        if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
-            this.calcular();
-        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario").toString();
-        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha").toString();
-        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Bonificación").toString();
-        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Fecha de Ingreso ").toString();
-        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha de Ingreso, Bonificación ").toString();
-        }else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Bonificación ").toString();
-        }else {
-            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Todos los campos, ").toString();
-        }
-
-        if (!campos_vacios.equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(null, "El siguiente(s) campo(s) se encuentra vacío(s): " + campos_vacios +".", "Error!!", JOptionPane.ERROR_MESSAGE);
-        } else {
-            //No ejecuta nada
-        }
+        ejecutar();
 
     }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void charRegimenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_charRegimenActionPerformed
+        // TODO add your handling code here:
+        if(this.charRegimen.getSelectedItem().toString().equalsIgnoreCase("p")){
+            ejecutar();
+        } else if(this.charRegimen.getSelectedItem().toString().equalsIgnoreCase("f")){
+            ejecutar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un regimen");
+        }
+        
+    }//GEN-LAST:event_charRegimenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,16 +171,44 @@ public class Vista extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void ejecutar(){
+        String campos_vacios = "";
+        if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            this.calcular();
+        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Bonificación").toString();
+        } else if ((txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (!txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Fecha de Ingreso ").toString();
+        } else if (!(txtSalario.getText().equalsIgnoreCase("")) && (txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Fecha de Ingreso, Bonificación ").toString();
+        }else if ((txtSalario.getText().equalsIgnoreCase("")) && (!txtFecha.getText().equalsIgnoreCase("")) && (txtBonificacion.getText().equalsIgnoreCase(""))) {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Salario, Bonificación ").toString();
+        }else {
+            campos_vacios = new StringBuilder().insert(campos_vacios.length(), "Todos los campos, ").toString();
+        }
+
+        if (!campos_vacios.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "El siguiente(s) campo(s) se encuentra vacío(s): " + campos_vacios +".", "Error!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //No ejecuta nada
+        }
+    
+    }
 
     public void calcular() {
         // Obteniendo fecha de ingreso
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd MM yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
         String fech = txtFecha.getText().substring(0, 10);
         String item = "", regimen, texto_resultante;
         char reg;
         float bono14, aguinaldo, indemenizacion, igss, iva, subTotal, salarioLiquido;
         DecimalFormat formato1 = new DecimalFormat("#,###,###.00");
-
+        item = charRegimen.getSelectedItem().toString().substring(0, 1);
         try {
 
             if (item.equalsIgnoreCase("s")) {
@@ -194,7 +218,6 @@ public class Vista extends javax.swing.JFrame {
             } else {
                 Date fechaInicial = miFormato.parse(fech);
                 Calculos empleado = new Calculos();
-                item = charRegimen.getSelectedItem().toString().substring(0, 1);
                 empleado.setRegimen(item.charAt(0));
                 empleado.setSalario(Float.parseFloat(txtSalario.getText()));
                 empleado.setBonificacion(Float.parseFloat(txtBonificacion.getText()));
@@ -215,7 +238,6 @@ public class Vista extends javax.swing.JFrame {
                         texto_resultante = "         ULTIMO \t SUELDO \n"
                                 + "************************************\n"
                                 + "\n"
-                                + "\n"
                                 + "  Regimen:       \t\t" + regimen + "\n"
                                 + "   Sueldo:       \t\tQ." + formato1.format(empleado.getSalario()) + "\n"
                                 + "   Bonificación: \t\tQ." + formato1.format(empleado.getBonificacion()) + "\n"
@@ -227,7 +249,6 @@ public class Vista extends javax.swing.JFrame {
                                 + "(-)IGSS:         \t\tQ." + formato1.format(igss) + "\n"
                                 + "---------------------------------------------------------\n"
                                 + "Sueldo Liquido:  \tQ." + formato1.format(salarioLiquido) + "\n";
-
                     }
                     break;
                     case 'F': {
